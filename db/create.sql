@@ -8,4 +8,14 @@ create table if not exists accounts (
     email           varchar(255)    not null unique,
     password_hash   varchar(255)    not null,
     display_name    varchar(255)    not null
-)
+);
+
+create table if not exists tokens (
+    id              serial primary key,
+    account_id      integer not null,
+    access_token    varchar(255) not null,
+    generated_at    bigint not null,
+    expires_in     int not null,
+
+    foreign key (account_id) references accounts(id) on delete cascade
+);

@@ -5,7 +5,7 @@ export default interface TokenRecord
     id: number;
 
     // user id associated with the sign-in action
-    user_id: number;
+    account_id: number;
 
     // token generated at sign-in action
     access_token: string;
@@ -14,5 +14,5 @@ export default interface TokenRecord
     generated_at: number;
 
     // how long the token lasts
-    expires: number;
+    expires_in: number;
 }

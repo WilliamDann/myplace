@@ -1,17 +1,17 @@
 import assert from 'assert'
-import AccountRecord from '../types/AccountRecord';
-import AccountRepository from '../src/AccountRepository';
+import TestAccountRecord from './TestRecord';
+import TestRepository from './TestRepo';
 
 const sampleAccount = {
     email: 'test@test.test',
     password_hash: "hash!",
     display_name: "testing user"
-} as Partial<AccountRecord>
+} as Partial<TestAccountRecord>
 
-describe('AccountRepository', () => {
+describe('Repository', () => {
     describe('#getById', () => {
         it ('should return a valid record', async () => {
-            let repo    = new AccountRepository()
+            let repo    = new TestRepository()
             let created = await repo.create(sampleAccount)
             
             let read = await repo.getById(created.id)
@@ -24,7 +24,7 @@ describe('AccountRepository', () => {
 
     describe('#create', () => {
         it ('should return a valid record', async () => {
-            let repo    = new AccountRepository()
+            let repo    = new TestRepository()
             let created = await repo.create(sampleAccount)
             await repo.delete(created.id)
 
@@ -33,7 +33,7 @@ describe('AccountRepository', () => {
         });
 
         it ('should have created the record in the db', async () => {
-            let repo    = new AccountRepository()
+            let repo    = new TestRepository()
             let created = await repo.create(sampleAccount)
             
             let read = await repo.getById(created.id)
@@ -47,7 +47,7 @@ describe('AccountRepository', () => {
     describe('#update', () => {
 
         it ('should reutrn an updated record', async () => {
-            let repo    = new AccountRepository()
+            let repo    = new TestRepository()
             let created = await repo.create(sampleAccount)
             
             let cpy = Object.assign({}, sampleAccount)
@@ -62,7 +62,7 @@ describe('AccountRepository', () => {
 
 
         it ('should have updated the db', async () => {
-            let repo    = new AccountRepository()
+            let repo    = new TestRepository()
             let created = await repo.create(sampleAccount)
             
             let cpy = Object.assign({}, sampleAccount)
@@ -80,7 +80,7 @@ describe('AccountRepository', () => {
 
     describe('#delete', () => {
         it ('should delete the given record in the db', async () => {
-            let repo    = new AccountRepository()
+            let repo    = new TestRepository()
             let created = await repo.create(sampleAccount)
 
             await repo.delete(created.id)
