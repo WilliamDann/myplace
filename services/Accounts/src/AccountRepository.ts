@@ -1,7 +1,7 @@
 import DB from "../../../shared/db";
 import SQL from "../../../shared/sql";
 import AccountRecord from "../types/AccountRecord";
-import SqlRepository from "./SqlRepository";
+import SqlRepository from "../../../shared/pattern/SqlRepository";
 
 export default class AccountRepository extends SqlRepository<AccountRecord>
 {
