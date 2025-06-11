@@ -9,3 +9,11 @@ create table if not exists accounts (
     password_hash   varchar(255)    not null,
     display_name    varchar(255)    not null
 );
+
+create table if not exists items (
+    id              serial          primary key,
+    upc             varchar(12)     not null,
+    display_name    varchar(255)    not null,
+    "description"   varchar(255)    not null,
+    added_at        bigint          not null,   
+);

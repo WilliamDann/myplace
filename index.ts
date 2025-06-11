@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import errors from './shared/errors';
 import dotenv from 'dotenv';
 import Logs from './shared/log';
+import itemsService from './services/Items/api/all';
 import accountsService from './services/Accounts/api/all';
 import DB from './shared/db';
 import token from './shared/token';
@@ -34,6 +35,7 @@ app.use(bodyParser.urlencoded())
 app.use(token)
 
 // routes
+itemsService(app);
 accountsService(app);
 
 // error handling
