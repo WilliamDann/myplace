@@ -6,6 +6,24 @@ import ItemRecord from "../types/ItemRecord";
 import parseUPC from "../../../shared/UPC";
 import OwnershipRepository from "../src/OwnershipRepository";
 
+// get authed user's userid from request
+function getAuthedUser(req: any): number
+{
+    if (!req.account_id) {
+        throw new AppError(403, 'permission error');
+    }
+    return req.account_id;
+}
+
+// get item id from request query
+function getItemId(req: any): number 
+{
+    const item_id = parseInt(req.query.item_id as string);
+    if (!item_id || Number.isNaN(item_id))
+        throw new AppError(400, 'invalid item_id supplied');
+    return item_id;
+}
+
 export default function(app: Application)
 {
     const repo      = new ItemRepository();
@@ -14,9 +32,7 @@ export default function(app: Application)
     // api route to get item by id
     app.get('/api/item', async (req, res) => {
         // read item_id from request
-        const item_id = parseInt(req.query.item_id as string);
-        if (!item_id || Number.isNaN(item_id))
-            throw new AppError(400, 'invalid item_id supplied');
+        const item_id = getItemId(req);
 
         // get item from database
         const item = await repo.getById(item_id);
@@ -30,21 +46,18 @@ export default function(app: Application)
     // api route to get all of a given user's items
     app.get('/api/item/my', async(req, res) => {
         // get authed user
-        let authedUser = (req as any).account_id;
-        if (!authedUser) {
-            throw new AppError(403, 'permission error');
-        }
+        let authedUser = getAuthedUser(req);
 
+        // get all items that belong to that user
         const items = await ownerRepo.getUserItems(authedUser);
+
+        // OK
         res.json( {items: items} )
     })
 
     // api route to create an item
     app.post('/api/item', async (req, res) => {
-        let authedUser = (req as any).account_id;
-        if (!authedUser) {
-            throw new AppError(403, 'permission error');
-        }
+        let authedUser = getAuthedUser(req);
 
         // get required fields
         const fields = extractFields(req.body, [ 'upc', 'display_name', 'description' ])
@@ -80,15 +93,8 @@ export default function(app: Application)
     // api route to update an item
     app.put('/api/item', async (req, res) => {
         // get authed used
-        let authedUser = (req as any).account_id;
-        if (!authedUser) {
-            throw new AppError(403, 'permission error');
-        }
-
-        // read item_id from request
-        const item_id = parseInt(req.query.item_id as string);
-        if (!item_id || Number.isNaN(item_id))
-            throw new AppError(400, 'invalid item_id supplied');
+        let authedUser = getAuthedUser(req);
+        let item_id    = getItemId(req);
 
         // check if user owns item
         if (!await ownerRepo.userOwnsItem(authedUser, item_id))
@@ -111,15 +117,8 @@ export default function(app: Application)
     // api route to delete an item
     app.delete('/api/item', async (req, res) => {
         // get authed used
-        let authedUser = (req as any).account_id;
-        if (!authedUser) {
-            throw new AppError(403, 'permission error');
-        }
-
-        // read item_id from request
-        const item_id = parseInt(req.query.item_id as string);
-        if (!item_id || Number.isNaN(item_id))
-            throw new AppError(400, 'invalid item_id supplied');
+        let authedUser = getAuthedUser(req);
+        let item_id    = getItemId(req);
 
         // check if user owns item
         if (!await ownerRepo.userOwnsItem(authedUser, item_id))
