@@ -12,11 +12,21 @@ export default class SQL
         return '*'
     }
 
+    // escape strings
+    static escape(value: any): string {
+        if (typeof value === "string")
+            return escapeLiteral(value)
+        if (value == null || value == undefined)
+            return 'NULL'
+
+        return ''+value
+    }
+
     // generate a sql set clause
     static setClause(updates: any)
     {
         return Object.entries(updates)
-            .map(([key, value]) => {return `"${key}" = ${escapeLiteral(value)}`})
+            .map(([key, value]) => {return `"${key}" = ${this.escape(value)}`})
             .join(', ')
     }
 
@@ -24,7 +34,7 @@ export default class SQL
     static whereClause(where: any)
     {
         return Object.entries(where)
-            .map(([key, value]) => { return `"${key}" = ${escapeLiteral(value)}`})
+            .map(([key, value]) => { return `"${key}" = ${this.escape(value)}`})
             .join(' and ')
     }
     
@@ -44,15 +54,15 @@ export default class SQL
         const vals = Object.values(data)
         
         const colsPart = cols.map(col => `"${col}"`).join(', ')
-        const valsPart = vals.map(val => escapeLiteral(val)).join(', ')
+        const valsPart = vals.map(val => this.escape(val)).join(', ')
         
-        return `insert into "${tableName}" (${colsPart}) values (${valsPart});`
+        return `insert into "${tableName}" (${colsPart}) values (${valsPart}) returning *;`
     }
 
     // generate a simple sql update 
     static update(tableName: string, updates: any, where: any): string
     {   
-        return `update "${tableName}" set ${this.setClause(updates)} where ${this.whereClause(where)};`
+        return `update "${tableName}" set ${this.setClause(updates)} where ${this.whereClause(where)} returning *;`
     }
 
     // generates a simple sql delete

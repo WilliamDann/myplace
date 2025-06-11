@@ -18,6 +18,7 @@
     "winston": "^3.17.0"
   },
   "devDependencies": {
+    "@types/mocha": "^10.0.10",
     "mocha": "^11.6.0"
   }
 }

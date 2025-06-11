@@ -16,17 +16,29 @@ export default class DB
         dotenv.config();
 
         // create pool instance
-        this.instance = new Client({
+        let instance = new Client({
             connectionString: "postgresql://postgres:root@localhost:5432/postgres",
             ssl: false
         })
 
         // connect to database
         //  TODO better logging
-        await this.instance.connect()
+        try {
+            await instance.connect()
+        } catch (err) {
+            Logs.error(''+err)
+            return
+        }
 
         // set search path
-        await this.query(`set search_path to myplace;`)
+        try {
+            await instance.query(`set search_path to myplace;`)
+        } catch (err) {
+            Logs.error(''+err)
+            return
+        }
+
+        this.instance = instance
     }
 
     // close the connection
@@ -36,9 +48,9 @@ export default class DB
     }
 
     // get the current connection
-    public static connection() {
+    public static async connection(): Promise<Client> {
         if (!this.instance)
-            this.createConnection()
+            await this.createConnection()
 
         return this.instance
     }
@@ -49,6 +61,15 @@ export default class DB
         let connection = await this.connection();
 
         Logs.info(`sql query: ${str}`)
-        return await connection.query(str)
+        let data;
+
+        try {
+            data = await connection.query(str)
+        } catch (err) {
+            Logs.error(`sql error: ${err}`)
+            throw err
+        }
+
+        return data
     }
 }

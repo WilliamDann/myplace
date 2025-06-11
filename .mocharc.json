@@ -1,4 +1,5 @@
 {
     "spec": "bin/**/*.test.js",
-    "recursive": true
+    "recursive": true,
+    "parallel": false
 }

@@ -28,7 +28,7 @@ export default class Logs
         ]
         });
         
-        logger.info('## LOGGER STARTED ######################################### ');
+        logger.info('\n\n\n\n\n## LOGGER STARTED ######################################### ');
         this.instance = logger;
     }
 
