@@ -38,6 +38,7 @@ export default class DB
             return
         }
 
+        Logs.info('database connection created');
         this.instance = instance
     }
 
