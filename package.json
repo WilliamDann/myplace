@@ -1,0 +1,23 @@
+{
+  "name": "myplace",
+  "version": "1.0.0",
+  "description": "MyPlace is a home inventory management solution designed for simple and effective tracking of all your stuff.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "build": "echo Building... && tsc -p tsconfig.json && echo \tDone",
+    "test": "npm run build && echo Running Tests... && mocha && echo \tDone"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "pg": "^8.16.0",
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "mocha": "^11.6.0"
+  }
+}
