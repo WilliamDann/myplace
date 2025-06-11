@@ -1,7 +1,6 @@
 import assert from 'assert'
 import TokenRepository from '../src/TokenRepository'
 import TokenRecord from '../types/TokenRecord'
-import AccountRecord from '../types/AccountRecord'
 import AccountRepository from '../src/AccountRepository'
 import DB from '../../../shared/db'
 import SQL from '../../../shared/sql'
