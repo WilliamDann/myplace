@@ -21,6 +21,12 @@ const host = process.env.HOST ? process.env.HOST : 'localhost'
 
 const app = express();
 
+// http logging
+app.use((req, res, next) => {
+    Logs.info(`http: method:${req.method} route:${req.url}`)
+    next();
+})
+
 // middleware
 app.use(bodyParser.urlencoded())
 
