@@ -8,7 +8,7 @@ const sampleAccount = {
     display_name: "testing user"
 } as Partial<TestAccountRecord>
 
-describe('Repository', () => {
+describe('SqlRepository', () => {
     describe('#getById', () => {
         it ('should return a valid record', async () => {
             let repo    = new TestRepository()
