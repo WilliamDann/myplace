@@ -102,10 +102,10 @@ export default function(app: Application)
             update.description = req.body.description
 
         // update item
-        await repo.update(item_id, update);
+        let updated = await repo.update(item_id, update);
 
         // OK
-        res.json({});
+        res.json(updated);
     });
 
     // api route to delete an item
