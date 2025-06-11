@@ -17,3 +17,9 @@ create table if not exists items (
     "description"   varchar(255)    not null,
     added_at        bigint          not null,   
 );
+
+create table if not exists items_accounts (
+    id              serial          primary key,
+    account_id      integer         not null references accounts(id) on delete cascade,
+    item_id         integer         not null references items(id) on delete cascade,
+)
