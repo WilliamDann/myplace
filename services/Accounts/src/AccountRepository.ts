@@ -1,9 +1,9 @@
 import DB from "../../../shared/db";
 import SQL from "../../../shared/sql";
 import AccountRecord from "../types/AccountRecord";
-import Repository    from "./Repository";
+import SqlRepository from "./SqlRepository";
 
-export default class AccountRepository extends Repository<AccountRecord>
+export default class AccountRepository extends SqlRepository<AccountRecord>
 {
     constructor() {
         super('accounts');
