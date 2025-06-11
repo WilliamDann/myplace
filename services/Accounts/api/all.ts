@@ -1,7 +1,7 @@
 import { Application } from 'express';
 import account from './account';
 import auth from './auth';
-import Logs from '../../../shared/log';
+import Logs from '../../Shared/log';
 
 export default function(app: Application) {
     account(app);

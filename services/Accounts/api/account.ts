@@ -1,10 +1,10 @@
 import { Application } from 'express';
-import extractFields from '../../../shared/extractFields';
+import extractFields from '../../Shared/extractFields';
 import AccountRecord from '../types/AccountRecord';
 import { genSalt, hash } from 'bcrypt';
 import AccountRepository from '../src/AccountRepository';
-import AppError from '../../../shared/AppError';
-import Logs from '../../../shared/log';
+import AppError from '../../Shared/AppError';
+import Logs from '../../Shared/log';
 
 function getAuthedId(req: any): number
 {

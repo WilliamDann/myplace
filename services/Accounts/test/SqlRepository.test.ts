@@ -1,6 +1,6 @@
 import assert from 'assert'
 import AccountRecord from '../types/AccountRecord';
-import SqlRepository from '../../../shared/pattern/SqlRepository';
+import SqlRepository from '../../Shared/pattern/SqlRepository';
 
 // sample data for testing
 const sampleAccount = {

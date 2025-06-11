@@ -1,6 +1,6 @@
 import { Application } from "express";
 import item from "./item";
-import Logs from "../../../shared/log";
+import Logs from "../../Shared/log";
 
 // import all routes
 export default function(app: Application)

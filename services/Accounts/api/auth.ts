@@ -1,7 +1,7 @@
 import { Application } from 'express';
-import extractFields from '../../../shared/extractFields';
+import extractFields from '../../Shared/extractFields';
 import AccountRepository from '../src/AccountRepository';
-import AppError from '../../../shared/AppError';
+import AppError from '../../Shared/AppError';
 import { compare } from 'bcrypt';
 import jwt from 'jsonwebtoken';
 

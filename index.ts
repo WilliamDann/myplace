@@ -1,12 +1,12 @@
 import express from 'express'
 import bodyParser from 'body-parser';
-import errors from './shared/errors';
+import errors from './services/Shared/errors';
 import dotenv from 'dotenv';
-import Logs from './shared/log';
+import Logs from './services/Shared/log';
 import itemsService from './services/Items/api/all';
 import accountsService from './services/Accounts/api/all';
-import DB from './shared/db';
-import token from './shared/token';
+import DB from './services/Shared/db';
+import token from './services/Shared/token';
 
 // load env vars
 dotenv.config();

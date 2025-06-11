@@ -1,6 +1,6 @@
-import DB from "../../../shared/db"
-import SqlRepository from "../../../shared/pattern/SqlRepository"
-import SQL from "../../../shared/sql"
+import DB from "../../Shared/db"
+import SqlRepository from "../../Shared/pattern/SqlRepository"
+import SQL from "../../Shared/sql"
 import ItemRecord from "../types/ItemRecord"
 import OwnershipRecord from "../types/OwnershipRecord"
 

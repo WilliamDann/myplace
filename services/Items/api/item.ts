@@ -1,9 +1,9 @@
 import { Application } from "express";
-import AppError from "../../../shared/AppError";
+import AppError from "../../Shared/AppError";
 import ItemRepository from "../src/ItemRepository";
-import extractFields from "../../../shared/extractFields";
+import extractFields from "../../Shared/extractFields";
 import ItemRecord from "../types/ItemRecord";
-import parseUPC from "../../../shared/UPC";
+import parseUPC from "../../Shared/UPC";
 import OwnershipRepository from "../src/OwnershipRepository";
 
 // get authed user's userid from request
