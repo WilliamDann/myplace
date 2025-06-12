@@ -7,5 +7,5 @@ export default function(app: Application)
 {
     item(app);
 
-    Logs.info('items service started');
+    Logs.info('items service registered');
 }

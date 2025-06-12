@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import Logs from './services/Shared/log';
 import itemsService from './services/Items/api/all';
 import accountsService from './services/Accounts/api/all';
+import placeService from './services/Places/api/all';
 import DB from './services/Shared/db';
 import token from './services/Shared/token';
 
@@ -37,6 +38,7 @@ app.use(token)
 // routes
 itemsService(app);
 accountsService(app);
+placeService(app);
 
 // error handling
 app.use(errors)
