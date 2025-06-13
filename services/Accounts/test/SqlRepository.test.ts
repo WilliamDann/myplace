@@ -4,7 +4,7 @@ import SqlRepository from '../../Shared/pattern/SqlRepository';
 
 // sample data for testing
 const sampleAccount = {
-    email: 'test@test.test',
+    email: 'invalid test user',
     password_hash: "hash!",
     display_name: "testing user"
 } as Partial<AccountRecord>

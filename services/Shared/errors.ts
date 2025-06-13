@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response }  from "express";
 import AppError from "./AppError";
-import Logs from "./log";
+import Logs from "./Logs";
 
 export default function(err: Error, req: Request, res: Response, next: NextFunction)
 {

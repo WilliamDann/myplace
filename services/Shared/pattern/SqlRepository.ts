@@ -1,5 +1,5 @@
-import DB from "../db";
-import SQL from "../sql";
+import DB from "../DB";
+import SQL from "../SQL";
 import Repository from "./Repository";
 
 export default class SqlRepository<RecordType> implements Repository<RecordType>

@@ -1,7 +1,7 @@
 import ItemRecord from "../../Items/types/ItemRecord";
-import DB from "../../Shared/db";
+import DB from "../../Shared/DB";
 import SqlRepository from "../../Shared/pattern/SqlRepository";
-import SQL from "../../Shared/sql";
+import SQL from "../../Shared/SQL";
 import InventoryRecord from "../types/InventoryRecord";
 
 export default class InventoryRepository extends SqlRepository<InventoryRecord>

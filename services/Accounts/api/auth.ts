@@ -1,5 +1,5 @@
 import { Application } from 'express';
-import extractFields from '../../Shared/extractFields';
+import {extractFields} from '../../Shared/Request';
 import AccountRepository from '../src/AccountRepository';
 import AppError from '../../Shared/AppError';
 import { compare } from 'bcrypt';

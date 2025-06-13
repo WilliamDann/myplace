@@ -1,47 +1,10 @@
-import express from 'express'
-import bodyParser from 'body-parser';
-import errors from './services/Shared/errors';
-import dotenv from 'dotenv';
-import Logs from './services/Shared/log';
-import itemsService from './services/Items/api/all';
-import accountsService from './services/Accounts/api/all';
-import placeService from './services/Places/api/all';
-import DB from './services/Shared/db';
-import token from './services/Shared/token';
+import Logs from './services/Shared/Logs';
+import App  from './App';
 
-// load env vars
-dotenv.config();
+const app = App()
 
-// init db connection
-(async () => {
-    await DB.connection();
-})();
-
-
-const port = process.env.PORT ? parseInt(process.env.PORT) : 8080
 const host = process.env.HOST ? process.env.HOST : 'localhost'
-
-const app = express();
-
-// http logging
-app.use((req, res, next) => {
-    Logs.info(`http: method:${req.method} route:${req.url}`)
-    next();
-})
-
-// middleware
-app.use(bodyParser.urlencoded())
-
-// token auth middleware
-app.use(token)
-
-// routes
-itemsService(app);
-accountsService(app);
-placeService(app);
-
-// error handling
-app.use(errors)
+const port = process.env.PORT ? parseInt(process.env.PORT) : 8080
 
 // start app
 app.listen(port, host, () => {

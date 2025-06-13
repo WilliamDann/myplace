@@ -1,6 +1,6 @@
 import { Client, Result } from 'pg';
 import dotenv from 'dotenv';
-import Logs from './log';
+import Logs from './Logs';
 
 // database connection singleton
 export default class DB 

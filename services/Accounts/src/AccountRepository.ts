@@ -1,5 +1,5 @@
-import DB from "../../Shared/db";
-import SQL from "../../Shared/sql";
+import DB from "../../Shared/DB";
+import SQL from "../../Shared/SQL";
 import AccountRecord from "../types/AccountRecord";
 import SqlRepository from "../../Shared/pattern/SqlRepository";
 

@@ -1,6 +1,6 @@
-import DB from "../../Shared/db";
+import DB from "../../Shared/DB";
 import SqlRepository from "../../Shared/pattern/SqlRepository";
-import SQL from "../../Shared/sql";
+import SQL from "../../Shared/SQL";
 import PlaceRecord from "../types/PlaceRecord";
 
 export default class PlaceRepository extends SqlRepository<PlaceRecord>
