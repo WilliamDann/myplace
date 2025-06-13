@@ -3,16 +3,7 @@ import InventoryRepository from "../src/InventoryRepository";
 import AppError from "../../Shared/AppError";
 import PermissionRepository from "../src/PermissionRepository";
 import InventoryRecord from "../types/InventoryRecord";
-import Logs from "../../Shared/log";
-
-// get authed user's userid from request
-function getAuthedUser(req: any): number
-{
-    if (!req.account_id) {
-        throw new AppError(403, 'permission error');
-    }
-    return req.account_id;
-}
+import { extractFieldsOptional, extractNumber, getAuthedUser } from "../../Shared/Request";
 
 export default function (app: Application)
 {
@@ -22,10 +13,8 @@ export default function (app: Application)
     // get route for inventory record
     app.get('/api/inventory', async (req, res) => {
         // extract query info
-        const authedUser = getAuthedUser(req);
-        const inventory_id   = parseInt(req.query.inventory_id as string);
-        if (!inventory_id || Number.isNaN(inventory_id))
-            throw new AppError(400, 'invalid inventory_id');
+        const authedUser   = getAuthedUser(req);
+        const inventory_id = extractNumber(req.query, 'inventory_id');
 
         // read item
         const inventory = await repo.getById(inventory_id);
@@ -44,12 +33,8 @@ export default function (app: Application)
     app.get('/api/place/item', async(req, res) => {
         // extract query info
         const authedUser = getAuthedUser(req);
-        const place_id   = parseInt(req.query.place_id as string);
-        if (!place_id || Number.isNaN(place_id))
-            throw new AppError(400, 'invalid place_id');
-        const item_id   = parseInt(req.query.item_id as string);
-        if (!item_id || Number.isNaN(item_id))
-            throw new AppError(400, 'invalid account_id');
+        const place_id   = extractNumber(req.query, 'place_id');
+        const item_id    = extractNumber(req.query, 'item_id');
 
         // check if user has read access
         if (!await permRepo.hasReadPermission(authedUser, place_id))
@@ -66,9 +51,7 @@ export default function (app: Application)
     app.get('/api/place/items', async (req, res) => {
         // extract query info
         const authedUser = getAuthedUser(req);
-        const place_id   = parseInt(req.query.place_id as string);
-        if (!place_id || Number.isNaN(place_id))
-            throw new AppError(400, 'invalid place_id');
+        const place_id   = extractNumber(req.query, 'place_id');
 
         // check if user has read access
         if (!await permRepo.hasReadPermission(authedUser, place_id))
@@ -86,15 +69,9 @@ export default function (app: Application)
         // extract query info
         const authedUser = getAuthedUser(req);
 
-        const place_id   = parseInt(req.body.place_id as string);
-        if (!place_id || Number.isNaN(place_id))
-            throw new AppError(400, 'invalid place_id');
-        const item_id   = parseInt(req.body.item_id as string);
-        if (!item_id || Number.isNaN(item_id))
-            throw new AppError(400, 'invalid place_id');
-        let quantity   = parseInt(req.body.quantity as string);
-        if (!quantity || Number.isNaN(quantity))
-            quantity = 1
+        const place_id = extractNumber(req.query, 'place_id');
+        const item_id  = extractNumber(req.query, 'item_id');
+        const quantity = extractNumber(req.query, 'quantity');
 
         // check if user has write access
         if (!await permRepo.hasWritePermission(authedUser, place_id))
@@ -123,13 +100,8 @@ export default function (app: Application)
     // update route for inventory record
     app.put('/api/inventory', async (req, res) => {
         // extract query info
-        const authedUser = getAuthedUser(req);
-        const inventory_id   = parseInt(req.query.inventory_id as string);
-        if (!inventory_id || Number.isNaN(inventory_id))
-            throw new AppError(400, 'invalid inventory_id');
-
-        const place_id = req.body.place_id ? parseInt(req.body.place_id) : undefined
-        const quantity = req.body.quantity ? parseInt(req.body.quantity) : undefined
+        const authedUser   = getAuthedUser(req);
+        const inventory_id = extractNumber(req.query, 'inventory_id');
 
         // read item
         const inventory = await repo.getById(inventory_id);
@@ -140,12 +112,11 @@ export default function (app: Application)
         if (!await permRepo.hasWritePermission(authedUser, inventory.place_id))
             throw new AppError(403, 'permission error');
 
-        // update fields
-        let partial = { date_updated: Date.now() } as Partial<InventoryRecord>;
-        if (place_id)
-            partial.place_id = place_id;
-        if (quantity)
-            partial.quantity = quantity;
+        // get fields to update
+        let partial = extractFieldsOptional(req.body, [ 'place_id', 'quantity' ]) as Partial<InventoryRecord>;
+        if (Object.keys(partial).length != 0) {
+            partial.date_updated = Date.now();
+        }
 
         // update item
         let updated = await repo.update(inventory_id, partial);
@@ -157,10 +128,8 @@ export default function (app: Application)
     // delete route for inventory record
     app.delete('/api/inventory', async (req, res) => {
         // extract query info
-        const authedUser = getAuthedUser(req);
-        const inventory_id   = parseInt(req.query.inventory_id as string);
-        if (!inventory_id || Number.isNaN(inventory_id))
-            throw new AppError(400, 'invalid inventory_id');
+        const authedUser   = getAuthedUser(req);
+        const inventory_id = extractNumber(req.query, 'inventory_id');
 
         // read item
         const inventory = await repo.getById(inventory_id);

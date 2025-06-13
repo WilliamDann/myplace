@@ -1,28 +1,11 @@
 import { Application } from "express";
 import AppError from "../../Shared/AppError";
 import ItemRepository from "../src/ItemRepository";
-import extractFields from "../../Shared/extractFields";
+import {extractFields, extractNumber} from "../../Shared/Request";
 import ItemRecord from "../types/ItemRecord";
 import parseUPC from "../../Shared/UPC";
 import OwnershipRepository from "../src/OwnershipRepository";
-
-// get authed user's userid from request
-function getAuthedUser(req: any): number
-{
-    if (!req.account_id) {
-        throw new AppError(403, 'permission error');
-    }
-    return req.account_id;
-}
-
-// get item id from request query
-function getItemId(req: any): number 
-{
-    const item_id = parseInt(req.query.item_id as string);
-    if (!item_id || Number.isNaN(item_id))
-        throw new AppError(400, 'invalid item_id supplied');
-    return item_id;
-}
+import { getAuthedUser } from "../../Shared/Request";
 
 export default function(app: Application)
 {
@@ -32,7 +15,7 @@ export default function(app: Application)
     // api route to get item by id
     app.get('/api/item', async (req, res) => {
         // read item_id from request
-        const item_id = getItemId(req);
+        const item_id = extractNumber(req.query, 'item_id');
 
         // get item from database
         const item = await repo.getById(item_id);
@@ -94,7 +77,7 @@ export default function(app: Application)
     app.put('/api/item', async (req, res) => {
         // get authed used
         let authedUser = getAuthedUser(req);
-        let item_id    = getItemId(req);
+        let item_id    = extractNumber(req.query, 'item_id');
 
         // check if user owns item
         if (!await ownerRepo.userOwnsItem(authedUser, item_id))
@@ -118,7 +101,7 @@ export default function(app: Application)
     app.delete('/api/item', async (req, res) => {
         // get authed used
         let authedUser = getAuthedUser(req);
-        let item_id    = getItemId(req);
+        let item_id    = extractNumber(req.query, 'item_id');
 
         // check if user owns item
         if (!await ownerRepo.userOwnsItem(authedUser, item_id))

@@ -1,5 +1,5 @@
 import { Application } from "express";
-import Logs from "../../Shared/log";
+import Logs from "../../Shared/Logs";
 import place from "./place";
 import inventory from "./inventory";
 import permission from "./permission";

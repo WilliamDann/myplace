@@ -1,6 +1,6 @@
-import DB from "../../Shared/db";
+import DB from "../../Shared/DB";
 import SqlRepository from "../../Shared/pattern/SqlRepository";
-import SQL from "../../Shared/sql";
+import SQL from "../../Shared/SQL";
 import PermissionRecord from "../types/PermissionRecord";
 
 export default class PermissionRepository extends SqlRepository<PermissionRecord>
