@@ -7,7 +7,7 @@ import OwnershipRepository from '../src/OwnershipRepository';
 import OwnershipRecord from '../types/OwnershipRecord';
 
 let testAccount = {
-    email: 'invalid test email',
+    email: 'invalid test email ownership',
     password_hash: 'invalid test user',
     display_name: 'invalid test user'
 } as AccountRecord;

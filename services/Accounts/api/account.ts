@@ -1,11 +1,9 @@
 import { Application } from 'express';
-import {extractFields, extractFieldsOptional, extractNumber} from '../../Shared/Request';
+import {extractFields, extractFieldsOptional, extractNumber, getAuthedUser} from '../../Shared/Request';
 import AccountRecord from '../types/AccountRecord';
 import { genSalt, hash } from 'bcrypt';
 import AccountRepository from '../src/AccountRepository';
 import AppError from '../../Shared/AppError';
-import Logs from '../../Shared/Logs';
-import { getAuthedUser } from '../../Shared/Request';
 
 // clean an object to be sent to the user
 function clean(data: Partial<AccountRecord>, authed: boolean = false): Partial<AccountRecord>
@@ -31,7 +29,13 @@ export default function(app: Application) {
             throw new AppError(404, 'account does not exist')
 
         // OK
-        res.json(clean(account, account_id == getAuthedUser(req)));
+        let authed = false;
+        try {
+            const authedUser = getAuthedUser(req);
+            authed = authedUser == account_id;
+        } catch { }
+
+        res.json(clean(account, authed));
     });
 
     // api account create route

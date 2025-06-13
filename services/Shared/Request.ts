@@ -52,7 +52,7 @@ export function getAuthToken(req: Request, res: Response, next: NextFunction)
 {
     const token = req.headers['authorization'] as string;
     if (!token)
-        {
+    {
         next();
         return
     }
