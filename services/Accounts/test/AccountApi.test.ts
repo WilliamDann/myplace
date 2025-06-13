@@ -173,4 +173,107 @@ describe('Accounts API', () => {
                 }});
         })
     });
+
+    // put route tests
+    describe('PUT /api/account', () => {
+        it ('should return 403 when no user is defined', (done) => {
+            request.execute(app)
+                .put('/api/account')
+                .query({ account_id: createdId })
+                .type('form')
+                .send(testAccount)
+                .end((err, res) => {{
+                    assert(res.status == 403);
+                    done()
+                }});
+        });
+
+        it ('should return 403 when user not authed', (done) => {
+            request.execute(app)
+                .put('/api/account')
+                .query({ account_id: createdId })
+                .type('form')
+                .send(testAccount)
+                .end((err, res) => {{
+                    assert(res.status == 403);
+                    done()
+                }});
+        });
+
+        it ('should update info when user is authed', (done) => {
+            let update = { display_name: "UPDATE!" };
+
+            request.execute(app)
+                .put('/api/account')
+                .query({ account_id: createdId })
+                .set('Authorization', auth)
+                .type('form')
+                .send(update)
+                .end((err, res) => {{
+                    assert(res.status == 200);
+                    assert(res.body.display_name == update.display_name)
+                    done()
+                }});
+        });
+
+        it ('should never return password_hash', (done) => {
+            let update = { display_name: "UPDATE!" };
+
+            request.execute(app)
+                .put('/api/account')
+                .query({ account_id: createdId })
+                .set('Authorization', auth)
+                .type('form')
+                .send(update)
+                .end((err, res) => {{
+                    assert(res.status == 200);
+                    assert(res.body.display_name == update.display_name)
+                    assert(!res.body.password_hash)
+                    done()
+                }});
+        });
+    });
+
+    // delete route tests
+    describe('DELETE /api/account', () => {
+        it ('should return 403 when no user is defined', (done) => {
+            request.execute(app)
+                .delete('/api/account')
+                .query({ account_id: createdId })
+                .type('form')
+                .send(testAccount)
+                .end((err, res) => {{
+                    assert(res.status == 403);
+                    done()
+                }});
+        });
+
+        it ('should return 403 when user not authed', (done) => {
+            request.execute(app)
+                .delete('/api/account')
+                .query({ account_id: createdId })
+                .type('form')
+                .send(testAccount)
+                .end((err, res) => {{
+                    assert(res.status == 403);
+                    done()
+                }});
+        });
+
+        it ('should delete when user is authed', (done) => {
+            let update = { display_name: "UPDATE!" };
+
+            request.execute(app)
+                .delete('/api/account')
+                .query({ account_id: createdId })
+                .set('Authorization', auth)
+                .type('form')
+                .send(update)
+                .end((err, res) => {{
+                    assert(res.status == 200);
+                    assert(!res.body.display_name)
+                    done();
+                }});
+        });
+    });
 });
