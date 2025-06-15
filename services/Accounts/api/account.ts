@@ -38,6 +38,25 @@ export default function(app: Application) {
         res.json(clean(account, authed));
     });
 
+    // get currently signed in account
+    app.get('/api/account/my', async (req, res) => {
+        let account_id = getAuthedUser(req);
+
+        // get account from db
+        let account = await repo.getById(account_id) as Partial<AccountRecord>;
+        if (!account) 
+            throw new AppError(404, 'account does not exist')
+
+        // OK
+        let authed = false;
+        try {
+            const authedUser = getAuthedUser(req);
+            authed = authedUser == account_id;
+        } catch { }
+
+        res.json(clean(account, authed));
+    });
+
     // api account create route
     //  TODO prevent spamming!
     app.post('/api/account', async (req, res) => {

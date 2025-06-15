@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import Table from './Table';
 import { useEffect, useState } from "react";
 
-export default function()
+export default function({signedIn = false})
 {
     const {account_id}          = useParams()
     const [account, setAccount] = useState(null);
@@ -16,8 +16,12 @@ export default function()
             setLoading(true);
 
             try {
+                let url = '/account/my';
+                if (!signedIn)
+                    url = '/account?account_id='+account_id
+
                 // make request
-                const response = await fetch(`${import.meta.env.VITE_BASE_API}/account?account_id=${account_id}`);
+                const response = await fetch(`${import.meta.env.VITE_BASE_API}${url}`, { credentials: 'include' });
                 if (!response.ok)
                     throw new Error((await response.json()).error.message);
 

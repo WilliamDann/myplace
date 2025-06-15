@@ -4,6 +4,7 @@ import DB from "./services/Shared/DB";
 import Logs from "./services/Shared/Logs";
 import bodyParser from "body-parser";
 import { getAuthToken } from "./services/Shared/Request";
+import cookieParser from 'cookie-parser';
 
 import cors from 'cors';
 
@@ -24,7 +25,12 @@ export default function(testing = false)
 
     const app = express();
 
-    app.use(cors())
+    app.use(cors({
+        origin: 'http://localhost:8080',
+        credentials: true,
+        exposedHeaders: ['SET-COOKIE'] 
+    }))
+    app.use(cookieParser());
 
     // http logging
     app.use((req, res, next) => {

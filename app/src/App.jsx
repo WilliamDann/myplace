@@ -5,6 +5,7 @@ import Dashboard from './pages/Dashboard';
 import NotFound from './pages/NotFound';
 import Account from './components/Account';
 import AccountForm from './components/AccountForm';
+import LoginForm from './components/LoginForm';
 
 function App() {
   return (
@@ -17,6 +18,9 @@ function App() {
 
       <Route path='/account'>
         <Route path='create' element={<AccountForm />}></Route>
+        <Route path='login' element={<LoginForm />}></Route>
+
+        <Route index element={<Account signedIn={true} />} />
         <Route path='read/:account_id' element={<Account />}>
 
         </Route>
