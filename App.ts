@@ -5,6 +5,8 @@ import Logs from "./services/Shared/Logs";
 import bodyParser from "body-parser";
 import { getAuthToken } from "./services/Shared/Request";
 
+import cors from 'cors';
+
 import accountsService from './services/Accounts/api/all';
 import placeService from './services/Places/api/all';
 import itemsService from './services/Items/api/all';
@@ -21,6 +23,8 @@ export default function(testing = false)
     })();
 
     const app = express();
+
+    app.use(cors())
 
     // http logging
     app.use((req, res, next) => {
