@@ -64,7 +64,10 @@ export function getAuthToken(req: Request, res: Response, next: NextFunction)
     // add authed user to request object if valid
     jwt.verify(authToken, process.env.SECRET_KEY as string, (err: any, data: any) => {
         if (err)
-            throw new AppError(403, 'auth error');
+        {
+            res.clearCookie('token');
+            throw new AppError(403, 'auth error, invalid token supplied.');
+        }
         
         (req as any).account_id = (data as any).account_id;
         next();

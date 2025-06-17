@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ErrorAlert from './ErrorAlert';
+import ErrorAlert from '../ErrorAlert';
 
 export default function()
 {
@@ -15,7 +15,6 @@ export default function()
             email        : formData.get('email'),
             password     : formData.get('password'),
         };
-        console.log(partial);
 
         if (!partial.display_name || !partial.email || !partial.password)
             return setError(new Error("Invalid account info!"))

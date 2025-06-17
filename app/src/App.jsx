@@ -3,9 +3,9 @@ import AppNav from './components/AppNav';
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import NotFound from './pages/NotFound';
-import Account from './components/Account';
-import AccountForm from './components/AccountForm';
-import LoginForm from './components/LoginForm';
+import Account from './components/Account/Account';
+import AccountForm from './components/Account/AccountForm';
+import LoginForm from './components/Account/LoginForm';
 
 function App() {
   return (

@@ -1,4 +1,4 @@
-import { Application } from "express";
+import { Application} from "express";
 import PermissionRepository from "../src/PermissionRepository";
 import AppError from "../../Shared/AppError";
 import PermissionRecord from "../types/PermissionRecord";
@@ -68,7 +68,7 @@ export default function (app: Application)
     });
 
     // route to delete permissions for given user
-    app.delete('/api/place/permission', async (req, res) => {
+    app.delete('/api/place/permission', async (req: any, res: any) => {
         // extract query info
         const authedUser = getAuthedUser(req);
         const place_id   = extractNumber(req.query, 'place_id');

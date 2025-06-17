@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import Table from './Table';
+import Table from '../Table';
 import { useEffect, useState } from "react";
 
 export default function({signedIn = false})
@@ -41,7 +41,7 @@ export default function({signedIn = false})
     }, []);
 
     if (loading) return <p>loading...</p>
-    if (error)   return <p>Error: {error.message}</p>
+    if (error)   return window.location = '/account/login';
 
     return (
         <div className="container bg-body-tertiary p-4 text-center">
