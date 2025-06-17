@@ -51,16 +51,23 @@ export function extractNumber(body: any, field : string): number {
 export function getAuthToken(req: Request, res: Response, next: NextFunction)
 {
     const token = req.headers['authorization'] as string;
-    if (!token)
+    const cookie = req.cookies['token'] as string;
+
+    if (!token && !cookie)
     {
         next();
         return
     }
+
+    let authToken = token ? token : cookie;
     
     // add authed user to request object if valid
-    jwt.verify(token, process.env.SECRET_KEY as string, (err: any, data: any) => {
+    jwt.verify(authToken, process.env.SECRET_KEY as string, (err: any, data: any) => {
         if (err)
-            throw new AppError(403, 'auth error');
+        {
+            res.clearCookie('token');
+            throw new AppError(403, 'auth error, invalid token supplied.');
+        }
         
         (req as any).account_id = (data as any).account_id;
         next();
