@@ -6,7 +6,7 @@ function toTitleCase(str) {
 }
 
 // turn an object into a table
-export default function({data})
+export default function(data)
 {
     if (!data) return;
 
