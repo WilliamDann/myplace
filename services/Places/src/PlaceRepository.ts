@@ -12,7 +12,9 @@ export default class PlaceRepository extends SqlRepository<PlaceRecord>
 
     async getAccountPlaces(account_id: number): Promise<PlaceRecord[]>
     {
-        let data = await DB.query(SQL.select(this.tableName, { account_id: account_id }));
-        return data.rows;
+        const query = `select places.* from places join places_permissions on places.id = places_permissions.place_id where account_id=${account_id}`;
+        const result = await DB.query(query);
+
+        return result.rows;
     }
 }

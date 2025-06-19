@@ -4,6 +4,7 @@ import Home               from './pages/Home';
 import Dashboard          from './pages/Dashboard';
 import NotFound           from './pages/NotFound';
 import AccountRoutes      from './components/Account/Route';
+import PlaceRoutes        from './components/Place/Route';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         
         {AccountRoutes()}
+        {PlaceRoutes()}
 
         <Route path="/item" element={<NotFound />} />
         <Route path="*" element={<NotFound />} />
