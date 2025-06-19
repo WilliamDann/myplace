@@ -45,5 +45,5 @@ export default class PermissionRepository extends SqlRepository<PermissionRecord
     // true if the user is an owner of the place
     async hasOwnerPermission(account_id: number, place_id: number): Promise<boolean>
     {
-        return await this.checkPermission(account_id, place_id, 'owner');
+        return await this.checkPermission(account_id, place_id, 'member');
     }}

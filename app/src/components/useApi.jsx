@@ -18,7 +18,6 @@ export async function apiCall(endpoint, opts)
         err = err;
     }
     
-    console.log({data, error})
     return {data, error};
 }
 
