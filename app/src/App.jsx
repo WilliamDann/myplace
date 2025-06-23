@@ -5,6 +5,7 @@ import Dashboard          from './pages/Dashboard';
 import NotFound           from './pages/NotFound';
 import AccountRoutes      from './components/Account/Route';
 import PlaceRoutes        from './components/Place/Route';
+import ItemRoutes         from './components/Items/Route';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         
         {AccountRoutes()}
         {PlaceRoutes()}
+        {ItemRoutes()}
 
         <Route path="/item" element={<NotFound />} />
         <Route path="*" element={<NotFound />} />
