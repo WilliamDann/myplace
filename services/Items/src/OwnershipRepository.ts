@@ -13,7 +13,7 @@ export default class OwnershipRepository extends SqlRepository<OwnershipRecord>
     // get all items owned by a user
     async getUserItems(account_id: number): Promise<(ItemRecord&OwnershipRecord)[]>
     {
-        const query = `select * from items_accounts join items on items.id = items_accounts.item_id where items_accounts.account_id=${account_id};`
+        const query = `select items.* from items_accounts join items on items.id = items_accounts.item_id where items_accounts.account_id=${account_id};`
         const data = await DB.query(query);
 
         return data.rows;
