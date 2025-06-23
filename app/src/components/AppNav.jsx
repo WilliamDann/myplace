@@ -1,36 +1,43 @@
+import { BoxSeamFill, GeoAltFill, House, Person, Speedometer2 } from 'react-bootstrap-icons'
+
 
 // applicaiton nav bar
 export default function AppNav()
 {
   return (
-    <nav className="navbar navbar-expand-lg text-light bg-primary sticky-top">
-      <div className="container-fluid">
-        <a className="navbar-brand fw-bolder" href="/">MyPlace</a>
+    <div className='d-flex flex-column flex-shrink-0 p-3 text-white bg-dark h-100' style={{width: '250px'}}>
+      <br />
+      <a className='text-white text-decoration-none text-center fs-4' href="/">
+        <span>MyPlace</span>
+      </a>
+      <hr />
 
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
+      <a className='d-block m-2 text-white text-decoration-none text-start fs-4' href="/">
+        <House className='text-secondary m-2' size={22} />
+        <span>Home</span>
+      </a>
+      
+      <a className='d-block m-2 text-white text-decoration-none text-start fs-4' href="/dashboard">
+        <Speedometer2 className='text-secondary m-2' size={22} />
+        <span>Dashboard</span>
+      </a>
 
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              <a href="/dashboard" className="nav-link fw-bold" aria-current="page">Dashboard</a>
-            </li>
+      <a className='d-block m-2 text-white text-decoration-none text-start fs-4' href="/place">
+      <GeoAltFill className='text-secondary m-2' size={22} />
+        <span>Places</span>
+      </a>
 
-            <li className="nav-item">
-              <a className="nav-link fw-bold" href="/account">Account</a>
-            </li>
+      <a className='d-block m-2 text-white text-decoration-none text-start fs-4' href="/item">
+        <BoxSeamFill className='text-secondary m-2' size={22} />
+        <span>Items</span>
+      </a>
+      
 
-            <li className="nav-item">
-              <a className="nav-link fw-bold" href="/place">Places</a>
-            </li>
-
-            <li className="nav-item">
-              <a className="nav-link fw-bold" href="/item">Items</a>
-            </li>
-          </ul>
-        </div>
+        <hr />
+      <div className='fixed-bottom p-3 m-3'>
+        <Person className='text-secondary m-2' size={22} />
+        <a className="text-white text-decoration-none text-start" href='/account'>My Account</a>
       </div>
-    </nav>
+    </div>
   );
 }
