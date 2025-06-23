@@ -35,7 +35,7 @@ export default function(app: Application)
         const items = await ownerRepo.getUserItems(authedUser);
 
         // OK
-        res.json( {items: items} )
+        res.json( items )
     })
 
     // api route to create an item
