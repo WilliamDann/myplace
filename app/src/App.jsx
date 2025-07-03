@@ -1,11 +1,18 @@
 import Cookies from 'js-cookie'
-import Signin  from './pages/Signin';
+import Signin  from './components/Signin';
+import { useState } from 'react';
 
 export default function()
 {
-    const userToken = Cookies.get('token');
-    if (!userToken) {
-        return <Signin />
+    const [token, setToken] = useState();
+    const [error, setError] = useState();
+
+    if (!token) {
+        const cookie = Cookies.get('token')
+        if (cookie)
+            setToken(cookie)
+        else
+            return <Signin onSignIn={setToken} />
     }
 
     return <></>

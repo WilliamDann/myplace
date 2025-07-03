@@ -1,12 +1,14 @@
-import BuildingsSticky from '../components/BuildingsSticky'
-import PageGradient    from '../components/PageGradient'
+import Cookies from 'js-cookie';
+
+import BuildingsSticky from './bg/BuildingsSticky'
+import PageGradient    from './bg/PageGradient'
 
 import Form            from 'react-bootstrap/Form'
 import Button          from 'react-bootstrap/Button'
 
 import {apiCall} from '../useApi';
 
-export default function()
+export default function({onSignIn})
 {
     const submit = async (formData) => {
         const partial = {
@@ -24,6 +26,11 @@ export default function()
             console.error(err);
             return;
         }
+
+        if (formData.get('remember'))
+            Cookies.set('token', data.token)
+
+        onSignIn(data.token)
     }
 
     return (
@@ -45,15 +52,15 @@ export default function()
                         backgroundColor: "rgba(255, 255, 255, 0.1)",
                         backdropFilter: "blur(10px)",
                         WebkitBackdropFilter: "blur(10px)", // Safari support
-                        width: "70%",
-                        height: "70%"
+                        width: "50%",
                     }}
                     className="p-3 text-center text-white"
                     >
 
                         <h1>Sign In</h1>
                         <p className='text-white'>Sign in to your MyPlace account.</p>
-                        <Form action={submit} className='text-white p-5'>
+                        <hr />
+                        <Form action={submit} className='text-white p-5 pt-1'>
                         <Form.Group className="mb-3" controlId="email">
                             <Form.Control name="email" className="p-2" type="email" placeholder="Enter email" />
                         </Form.Group>
@@ -62,7 +69,7 @@ export default function()
                             <Form.Control name="password" className="p-2" type="password" placeholder="Password" />
                         </Form.Group>
                         <Form.Group className="mb-3 text-start" controlId="formBasicCheckbox">
-                            <Form.Check type="checkbox" label="Remember me" />
+                            <Form.Check name="remember" type="checkbox" label="Remember me" />
                         </Form.Group>
                         <Button className="w-100 rounded m-2" type="submit">
                             Submit
