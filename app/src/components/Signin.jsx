@@ -28,9 +28,7 @@ export default function({onSignIn, onError})
             return;
         }
 
-        if (formData.get('remember'))
-            Cookies.set('token', data.token)
-
+        
         onSignIn(data.token)
     }
 
@@ -68,9 +66,6 @@ export default function({onSignIn, onError})
 
                         <Form.Group className="mb-3" controlId="password">
                             <Form.Control name="password" className="p-2" type="password" placeholder="Password" />
-                        </Form.Group>
-                        <Form.Group className="mb-3 text-start" controlId="formBasicCheckbox">
-                            <Form.Check name="remember" type="checkbox" label="Remember me" />
                         </Form.Group>
                         <Button className="w-100 rounded m-2" type="submit">
                             Submit

@@ -1,33 +1,45 @@
-import Cookies from 'js-cookie'
 import Signin  from './components/Signin';
-import Layout  from './Layout';
+import Error   from './components/Error'
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import PlaceSelect  from './components/PlaceSelect';
+import useSession   from './useSession';
+import Editor       from './Editor';
 
 export default function()
 {
-    const [token, setToken] = useState();
-    const [error, setError] = useState();
+    const [token, setToken, place, setPlace, clearSession] = useSession();
+    const [error, setError]                                = useState();
 
-    // run once to check for 'remember me' sign-in
-    useEffect(() => {
-        const cookie = Cookies.get('token')
-        if (cookie)
-            setToken(cookie)
-    });
-
-    // show sign in page if user isn't signed in
-    if (!token)
+    // show sign in page if no token is stored
+    if (!token) {
         return (
-            <Layout error={error}>
-                <Signin onError={setError} onSignIn={setToken}/>
-            </Layout>
+            <>
+                <Error message={error?.message} onDismiss={() => setError(null)} />
+                <Signin onSignIn={setToken} onError={setError}/>
+            </>
         );
+    }
 
-    // show main page
+    console.log(token)
+    console.log(place)
+
+    // show place select if no placeid is stored
+    if (!place) {
+        return (
+            <>
+                <Error message={error?.message} onDismiss={() => setError(null)} />
+                <PlaceSelect onSelect={setPlace} onError={setError} />
+            </>
+        )
+    }
+    
+
     return (
-        <Layout error={error}>
-            <p>Page</p>
-        </Layout>
+    <>
+        <Error message={error?.message} onDismiss={() => setError(null)} />
+
+        <Editor />
+    </>
     )
 }
