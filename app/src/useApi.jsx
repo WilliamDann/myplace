@@ -47,6 +47,5 @@ export default function useApi({endpoint, opts})
         (async () => { await fetchData() })();
     }, []);
     
-    console.log({data, loading, error})
     return {data, loading, error};
 }
