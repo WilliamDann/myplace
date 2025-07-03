@@ -8,7 +8,7 @@ import Button          from 'react-bootstrap/Button'
 
 import {apiCall} from '../useApi';
 
-export default function({onSignIn})
+export default function({onSignIn, onError})
 {
     const submit = async (formData) => {
         const partial = {
@@ -16,14 +16,15 @@ export default function({onSignIn})
             password: formData.get('password')
         }
 
-        const {data, err} = await apiCall('/auth', {
+        const {data, error} = await apiCall('/auth', {
             method: "POST",
             body: new URLSearchParams(partial),
             credentials: 'include'
         });
 
-        if (err) {
-            console.error(err);
+        if (error)
+        {
+            onError(error);
             return;
         }
 
