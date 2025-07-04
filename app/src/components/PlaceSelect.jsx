@@ -1,13 +1,13 @@
 import BuildingsSticky from './bg/BuildingsSticky'
 import PageGradient    from './bg/PageGradient'
-import Table           from './Table'
+import Table           from './ui/Table'
 
-import useApi from '../useApi';
+import useApi from '../api/useApi';
 
-export default function({token, onSelect, onError})
+export default function({onError})
 {
     let message;
-    const {data, loading, error}  = useApi(
+    const {data, loading, error} = useApi(
         {
             endpoint: `/place/my`,
             opts:
@@ -58,7 +58,7 @@ export default function({token, onSelect, onError})
                                 return (
                                     <div className="text-start container-lg border p-2 m-2" key={item.id}>
                                         <Table data={item} />
-                                        <button className="btn btn-primary m-1 pt-1 pb-1" onClick={() => onSelect(item.id)}>Select</button>
+                                        <a className="btn btn-primary m-1 pt-1 pb-1" href={"/place/" + item.id}>Select</a>
                                     </div>
                                 );
                             })

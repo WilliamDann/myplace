@@ -1,15 +1,17 @@
-import Signin  from './components/Signin';
-import Error   from './components/Error'
+import { useNavigate } from 'react-router-dom';
 
-import { useState } from 'react';
-import PlaceSelect  from './components/PlaceSelect';
-import useSession   from './useSession';
-import Editor       from './Editor';
+import Signin          from './components/Signin';
+import Error           from './components/ui/Error'
+
+import { useState }    from 'react';
+import useSession      from './api/useSession';
 
 export default function()
 {
-    const [token, setToken, place, setPlace, clearSession] = useSession();
-    const [error, setError]                                = useState();
+    const navigate = useNavigate();
+
+    const [token, setToken] = useSession();
+    const [error, setError] = useState();
 
     // show sign in page if no token is stored
     if (!token) {
@@ -20,26 +22,15 @@ export default function()
             </>
         );
     }
-
-    console.log(token)
-    console.log(place)
-
-    // show place select if no placeid is stored
-    if (!place) {
-        return (
-            <>
-                <Error message={error?.message} onDismiss={() => setError(null)} />
-                <PlaceSelect onSelect={setPlace} onError={setError} />
-            </>
-        )
-    }
     
+    navigate('/place/');
 
     return (
     <>
         <Error message={error?.message} onDismiss={() => setError(null)} />
 
-        <Editor />
+        <p>You should be redirected to the editor shortly...</p>
+        <a href="/place/">Or click here...</a>
     </>
     )
 }
