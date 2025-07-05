@@ -22,7 +22,6 @@ export default function(app: Application) {
 
         // generate token
         let token = jwt.sign({account_id: account.id}, process.env.SECRET_KEY as string, { expiresIn: '1h' });
-        res.cookie('token', token);
 
         // OK
         res.json( {token: token} );

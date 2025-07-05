@@ -1,19 +1,21 @@
+import { Link }         from "react-router-dom";
+import BuildingsSticky  from "../components/bg/BuildingsSticky";
+import PageGradient     from "../components/bg/PageGradient";
+import CenterFrostDiv   from '../components/CenterFrostDiv';
+
 export default function()
 {
-    const goBack = () => {
-      window.history.back()
-    };
-
-    const goTo = (location) => {
-        window.location = location;
-    }
-
     return (
-        <div className="container-lg">
-            <p>Sorry, this page was not found!</p>
-            <br />
-            <button className="btn btn-primary m-2" onClick={goBack}>Go Back</button>
-            <button className="btn btn-primary m-2" onClick={() => goTo('/dashboard')}>Dashboard</button>
-        </div>
-    );
+        <>
+            <BuildingsSticky />
+            <PageGradient>
+                <CenterFrostDiv>
+                    <h1>Page not found</h1>
+                    <hr />
+                    <p>Sorry, this page was not found.</p>
+                    <Link to="/">Home</Link>
+                </CenterFrostDiv>
+            </PageGradient>
+        </>
+    )
 }

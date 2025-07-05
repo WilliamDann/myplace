@@ -1,31 +1,36 @@
-import { Route, Routes }  from 'react-router-dom';
-import AppNav             from './components/AppNav';
-import Home               from './pages/Home';
-import Dashboard          from './pages/Dashboard';
-import NotFound           from './pages/NotFound';
-import AccountRoutes      from './components/Account/Route';
-import PlaceRoutes        from './components/Place/Route';
-import ItemRoutes         from './components/Items/Route';
+import { useNavigate } from 'react-router-dom';
 
-function App() {
-  return (
+import Signin          from './components/Signin';
+import Error           from './components/ui/Error'
+
+import { useState }    from 'react';
+import useSession      from './api/useSession';
+
+export default function()
+{
+    const navigate = useNavigate();
+
+    const [token, setToken] = useSession();
+    const [error, setError] = useState();
+
+    // show sign in page if no token is stored
+    if (!token) {
+        return (
+            <>
+                <Error message={error?.message} onDismiss={() => setError(null)} />
+                <Signin onSignIn={setToken} onError={setError}/>
+            </>
+        );
+    }
+    
+    navigate('/place/');
+
+    return (
     <>
-      <AppNav />
-      <br />
+        <Error message={error?.message} onDismiss={() => setError(null)} />
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        
-        {AccountRoutes()}
-        {PlaceRoutes()}
-        {ItemRoutes()}
-
-        <Route path="/item" element={<NotFound />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </> 
-  )
+        <p>You should be redirected to the editor shortly...</p>
+        <a href="/place/">Or click here...</a>
+    </>
+    )
 }
-
-export default App
