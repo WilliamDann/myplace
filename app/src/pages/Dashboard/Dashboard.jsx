@@ -1,5 +1,6 @@
 import { Link }             from 'react-router-dom'
 import { Row, Col, Card }   from 'react-bootstrap';
+import { Camera }           from 'react-bootstrap-icons';
 
 export default function()
 {
@@ -84,6 +85,14 @@ export default function()
                 </Col>
 
                 <Link className="pt-2" to='bills'>See billing info →</Link>
+            </Row>
+
+            <Row className="pt-2 mb-4">
+                <h3>Controls</h3>
+                <Link className="pt-2" to='scan'>
+                    <Camera />
+                    <span> Scan an item →</span>
+                </Link>
             </Row>
         </>
     )

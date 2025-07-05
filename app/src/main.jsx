@@ -20,7 +20,6 @@ createRoot(document.getElementById('root')).render(
 
       <Route path='/place/:place_id' element={<Editor />}>
         <Route index element={<Dashboard />} />
-        <Route path='dashboard' element={<Dashboard />} />
       
       </Route>
 

@@ -14,7 +14,7 @@ export default function()
                 <ul className="nav nav-pills flex-column mb-auto">
 
                 <li>
-                    <Link to="dashboard" className="nav-link text-white">
+                    <Link to="" className="nav-link text-white">
                         <BarChartLine />
                         <span> Dashboard</span>
                     </Link>
